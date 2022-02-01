@@ -1,4 +1,4 @@
-# introducao-ao-R-FZB-Uergs
+# introdução-ao-R-FZB-Uergs
 
 Disciplina oferecida ao Mestrado Acadêmico em Sistemática e Conservação da Divercidade Biológica oferecido pela Fundação Zoobotânica e 
 Universidade Estadual do Rio Grande do Sul. 
