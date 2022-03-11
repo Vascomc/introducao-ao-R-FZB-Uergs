@@ -1,0 +1,17 @@
+
+
+Como Atividade, criem um Relatório em R Markdown contendo:
+
+1. YAML com título, sub-titulo, autoria, data e em formato PDF
+2. Corpo do Texto. Descreva o que ira fazer em cada chunk
+3. Chunks
+  3.1. Não mostrar os resultados para carregar os pacotes
+  3.2. Mostrar os Codigos
+  3.3. Não mostras mensagens e avisos
+4. Usar os dados iris
+  4.1. Fazer uma tabela resumo estatistico usando o pacote rstatix
+  4.2. criar um grafico de dispersao tendo a variavel especies como caondicao de cor
+  4.3. criar um grafico de erro tendo a variavel resposta largura de sepala
+5. Insira uma imagem que esteja em seu computador
+6. insira o link do GitHub da disciplina, inserido no texto.
+7. Enviar o arquivo .rmd para meu e-mail. No assunto colocar "R Markdown FZB-Uergs NOME DO ALUNO"
