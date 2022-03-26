@@ -1,0 +1,248 @@
+---
+title: "Disciplina de Introdução ao R"
+subtitle: "Guia RMarkdown"
+author: "Prof. Dr. Márlon de Castro Vasconcelos"
+date: "3/10/2022"
+output:
+  pdf_document: default
+  html_document: default
+
+---
+
+***
+
+```{}
+Pessoas, acabei por deletar o arquivo da nossa aula do RMarkdown. Pesso desculpas por isso.
+
+Dito isso, eu organizarei melhor, dentro do que vimos, esse arquivo de guia.
+
+Ainda, aquí é o básico para que possam criar arquivos para colegas, orientadores e dessa disciplina.
+```
+<br>
+
+# YAML - (*Yet Another Markup Language*)
+
+<br> 
+O YAML é o "cabeçalho", são os metadados do arquivo .rmd. É nele
+que colocamos os dados de Título, Autoria, data e configurações de saída
+de arquivo, como HTML, WORD, PDF, etc. Ele é delimitado por três hífens
+---, tanto na parte superior quanto inferior. <br>
+
+```{}
+    ---
+    title: "Arquivo_Disciplina"
+    author: "Marlon"
+    date: "3/10/2022"
+    output: html_document
+    ---
+```
+<br> 
+Uma configuração interssante para se ter no YAML, é gerar a data de
+forma automática. Para isso fazemos assim: <br>
+
+```{}
+    ---
+    title: "Arquivo_Disciplina"
+    author: "Marlon"
+    date: "`r format(Sys.time(), '%d %B, %Y')`"
+    output: html_document
+    ---
+```
+<br> Agora sempre que o arquivo for gerado ele sairá com a data
+automáticamente. Lindo né? <br> Até aqui percebam duas coias:
+
+1.  Usei a estrutra de três crases antes de uma {} e três crases depoispara criar uma caixa. É a mesma estrura para o chunk, mas sem a idicação do *`R`* nela.
+2.  Usei `<br>` para deixar uma linha de espaço entre um texto e outro,assim, temos nossos parágrafos. <br> <br>
+
+\newpage
+
+# Corpo do texto
+
+<br> O `#` que usamos como comentários no *`R`*, só funcionará assim,
+dentro de um ***Chunk***. Quando num corpo de texto, ele funcionará para
+indicar Títulos e sub-títulos. <br>
+```{}
+    # Título 1
+    ## Título 2
+    ### Título 3
+
+    O n° de # indicará o nível do título e sub-título.
+```
+<br>
+
+# Título 1
+
+## Título 2
+
+### Título 3
+
+
+## Separando os parágrafos
+
+<br> Escrevemos normalmente o nosso texto. Para criar um novo parágrafo,
+ao final do texto demos um `ENTER`, deixamos uma linha em branco `<br>`,
+ou com outro `ENTER`. Se ao final do parágrafo nao dermos o `ENTER`, a
+proxíma escrita continuará como sendo o mesmo parágrafo.
+
+ex.: blábláblá blábláblá blábláblá blábláblá blábláblá blábláblá
+blábláblá blábláblá. Aqui dei `ENTER` e não deixe uma linha separando.
+
+ex.: blábláblá blábláblá blábláblá blábláblá blábláblá
+
+blábláblá blábláblá blábláblá. <br>
+
+## Marcações Especiais
+
+<br>
+
+```{r}
+# Sobrescrito: R^2^
+# Subscrito: H~2~SO~4~
+# Itálico: *palavra*
+# Negrito: **palavra**
+# Itálico + Negrito: ***palavra***
+```
+
+R^2^ <br> H~2~SO~4~ <br> *palavra* <br> **palavra** <br> ***palavra***
+<br> Listas Ordenadas
+
+```{}
+    1. Item
+    2. Item
+    3. Item
+       + 3.1. Item
+       + 3.2. Item
+         + 3.2.1. Item
+
+    Veja que nos sub-ítens, usei o + antes.
+```
+<br>
+
+1.  Item
+
+2.  Item
+
+3.  Item
+
+    + 3.1. Item
+
+    + 3.2. Item
+
+        + 3.2.1. Item 
+<br>
+
+## Inserindo uma Imagem de arquivo
+
+<br> Para inserir uma imagem é necessário por o caminho ***PATH*** do
+arquivo no seu computador. É importante que o caminho não contenha nomes
+duplos, mas se houver use o _ entre as palavras, e caracteres
+especiais. <br>
+
+```{r}
+# ! [Descrição da Figura/Imagem] (c://R//Disciplina_R_FZB/arquivo.estenção)
+```
+
+<br>
+<center>
+
+![Exemplo de
+Figura](/Users/marlondecastrovasconcelos/Pictures/UergsVerdeVertical.png){width="10cm"}
+
+<center>
+
+## Inserindo um link da internet
+<br>
+Pra inserir links da internet fora do texto colocamos o link entre os sinais de < e >. 
+
+<https://www.sciencedirect.com/science/article/pii/S0301479722001025>
+
+<br>
+Para por no meio do texto usamos assim: o que quer escrever entre colchetes, e o linque entre parênteses.
+<br>
+[Veja o artigo tal.](https://www.sciencedirect.com/science/article/pii/S0301479722001025)
+
+\newpage
+
+# Chunks: (*Escrevendo nossos códigos*)
+
+<br> Os chunks são os locais onde escrevemos nossos códigos/comandos
+para que gerem os resultados em *`R`* (no nosso caso). `{r}`.
+
+```{r}
+# Criando um chunck
+
+# ``` {r}
+#
+# ```
+
+# Escrevemos nossos códigos aqui.
+c <- seq(1:10)
+c
+# Para sair do Chunk, demos um enter depois de ``` no fim.
+```
+
+<br>
+
+## Configurações do Chunk
+<br>
+[Temos várias configurações](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), nesse link vocês acharam várias dicas sobre ```RMarkdown```, inclusive as configurações de Chunks.
+
+É comum fazer uma caonfiguração geral do Chunk no ínicio do documento, e precisando, especificar uma configuraçao diferente em um chunk em específico.
+<br>
+
+### Configuração "Geral"
+<br>
+```{r , warning = FALSE, highlight = TRUE}
+
+# Para RESULTADOS:
+# echo: Se FALSE, não será exibido o código
+# results: Se 'hide' o resultado não será mostrado. Normalmente uso para o chunk que carrega os pacotes que uso.
+# message: Se FALSE, não será mostrada nenhuma mensagem gerada pelo código
+# warning: Se FALSE, não serão mostrados os avisos.
+
+# Para o CÓDIGO:
+# eval: Se FALSE, não será "lido" o código, ou seja, ele aparece, mas não haverá nenhum resultado.
+
+# Para DECORAÇÃO:
+# tidy: se TRUE, o knitr organizará os pedaços de código para exibição com a função tidy_source() no pacote formatR.
+# highlight: Se TRUE, o código ficará destacado.
+
+# Para FIGURAS:
+# fig.align: Alinhamento do plot. 'center', 'left', 'rigth'...
+# fig.dim: Dimenção do plot, usando junto com c(); c(largura,altura).
+# dpi: Resolução do plot
+# fig.ext: Extensão, .png, .jpeg, .tiff, etc
+# fig.cap= Legenda do plot.
+#------------------------
+#------------------------
+# Usamos assim:
+# {r, echo = FALSE, warning = FALSE, highlight = TRUE}
+# Brinque um pouco com essas configurações
+```
+<br>
+
+### Configuração para um plot
+<br>
+
+```{r fig.align='center', fig.cap="Figura1"}
+# {r fig.align='center', fig.cap="Figura 1"}
+
+ggpubr::ggscatter(mtcars, x = "hp", y = "mpg", color = "vs", xlab = "Potência", ylab = "Milhas por galão")
+```
+<br>
+<br>
+
+\newpage
+
+# Links 
+<br>
+[R Markdown::CHEAT SHEET](https://ethz.ch/content/dam/ethz/special-interest/math/statistics/sfs/Education/Advanced%20Studies%20in%20Applied%20Statistics/course-material-1719/Datenanalyse/rmarkdown-2.pdf)
+<br>
+[5 truques em RMarkdown](https://analisemacro.com.br/data-science/dicas-de-rstats/hackeando-o-r-5-truques-do-rmarkdown/)
+<br>
+[R Markdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+<br>
+[Escrevendo sua dissertação em R Markdown](https://ourcodingclub.github.io/tutorials/rmarkdown-dissertation/)
+<br>
+[Canal do Zurubabel](https://www.youtube.com/c/Zurubabel/search)
+<br>
