@@ -1,6 +1,6 @@
 # introdução-ao-R-FZB-Uergs
 
-Disciplina oferecida ao Mestrado Acadêmico em Sistemática e Conservação da Divercidade Biológica oferecido pela Fundação Zoobotânica e 
+Disciplina oferecida ao Mestrado Acadêmico em Sistemática e Conservação da Diversidade Biológica oferecido pela Fundação Zoobotânica e 
 Universidade Estadual do Rio Grande do Sul. 
 
 A disciplina é uma introdução ao ambiente R, abordado aspectos básicos como: Entendendo o R Studio, Aspectos da Linguagem R, criação e manipulação de Vetores, 
