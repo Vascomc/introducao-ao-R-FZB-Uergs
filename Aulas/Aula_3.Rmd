@@ -51,7 +51,7 @@ forma automática. Para isso fazemos assim: <br>
 <br> Agora sempre que o arquivo for gerado ele sairá com a data
 automáticamente. Lindo né? <br> Até aqui percebam duas coias:
 
-1.  Usei a estrutra de três crases antes de uma {} e três crases depoispara criar uma caixa. É a mesma estrura para o chunk, mas sem a idicação do *`R`* nela.
+1.  Usei a estrutra de três crases antes de uma {} e três crases depois para criar uma caixa. É a mesma estrura para o chunk, mas sem a idicação do *`R`* nela.
 2.  Usei `<br>` para deixar uma linha de espaço entre um texto e outro,assim, temos nossos parágrafos. <br> <br>
 
 \newpage
