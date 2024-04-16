@@ -1,0 +1,169 @@
+---
+title: |
+  Fundação Zooboânica do Estado do Rio Grande do Sul e Universidade do Estado do Rio Grande do Sul
+  
+  Mestrado em Sistemática e Conservação da biodiversidade
+  
+subtitle: |
+  | Introdução ao Ambiente R
+  
+  | Atividade Final
+  
+author:
+- 'Prof. Dr. Márlon de Castro Vasconcelos^[marlon-vasconcelos@uergs.edu.br, https://github.com/Vascomc]'
+date: "`r format(Sys.time(), '%d %B %Y')`"
+tags: [nothing, nothingness]
+output: pdf_document
+geometry: "left = 2cm, right = 2cm, top = 2cm, bottom = 2cm"
+fontsize: 12pt
+lang: pt
+toc : Y
+abstract: |
+  A atividade final da disciplina consistirá em escrever e execultar alguns códigos visto em sala de aula. A atividade deverá ser reportada em arquivo criado em RMarkdown. Uma vez finalizado o código e a escrita em *RMarkdown*, o discente deverá enviar para o meu e-mail o arquivo ***`.rmd`***. 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, fig.align = "center", fig.width = 40, collapse = TRUE
+)
+```
+
+```{r, echo=FALSE, results='hide'}
+pacman::p_load("tidyverse", "rstatix", "ggpubr")
+```
+
+\newpage
+
+# 1. Do Conjunto de Dados
+
+------------------------------------------------------------------------
+
+Os dados utilizados nas atividades abaixo foram obtidos em trabalho de pesquisa da professora Danni Maisa da unidade Três Passos. Eles se destinam ***EXCLUSIVAMENTE*** a esta atividade final da disciplina.
+
+<br>
+
+O conjunto possui 60 unidades amostrais e 11 variáveis, sendo a primeira coluna a numeração com as unidades amostrais.
+
+<br>
+
+\newpage
+
+# 2. Instruções Gerais
+
+------------------------------------------------------------------------
+
+<br>
+
+Sugestões, para a criação dos códigos:
+
+-   Criar e rodar os códigos em um ***scrip***;
+
+-   Ler com atenção o que está sendo pedido;
+
+-   Ver exemplos nas aulas 1 e 2;
+
+-   Colocar os comentários para que possa entender o que está fazendo.
+
+-   Para todos os gráficos acrescente os títulos dos eixos
+
+<br>
+
+Sugestões, para a criação arquivo .Rmd:
+
+<br>
+
+-   Para o YAML
+
+    -   Título: Nome da disciplina;
+
+    -   Sub-título: Qula a atividade;
+
+    -   Autor: Nome do aluno;
+
+    -   data;
+
+    -   Saída: deverá ser em HTML
+
+-   Cada título deverá ser um exercício;
+
+-   Inserir os *chuncks* e cópiar o código do *script* e colar no *chunck*
+
+    -   Atente-se para as configurações de cada *chunck;*
+
+-   No corpo do texto abaixo do código do exercício, descrever o que ele faz;
+
+-   Usar o pacote **kableExtra** para as tabelas;
+
+-   Todos os códigos deverão ser mostrados.
+
+<br>
+
+\newpage
+
+# 3. Atividade
+
+<br>
+
+1.  Carregue os pacotes, **tidyverse**, **rstatix, kableExtra** e **ggpubr**;
+
+2.  Crie um objeto e transforme as variáveis *character* em *factor*;
+
+3.  Crie uma tabela de resumo estátistico para o número de indivíduos para cada ambiente;
+
+4.  Crie um boxplot para a riqueza e abundância.
+
+5.  Aplique operadores lógicos para selecionar:
+
+    1.  Somente dados para o ambiente de Mata;
+
+    2.  Para quando os valores de abundância forem maiores que 100;
+
+    3.  Valores de densidade menores que o 1° quartil e maiores que o 3° quartil da riqueza.
+
+6.  Passe o conjunto para formato *wide* tendo como base a variável ambiente e salve em um objeto, e mostre as 6 primeira linhas desse objeto como uma tabela.
+
+7.  Crie uma matriz, contendo 15 linhas e 5 colunas. Preencha as colunas usando distribuição Normal para as 3 primeiras colunas e distribuição de Poison para as duas ultimas.
+
+    1\. se atente para os parâmetros das funções *rnorn* e *rpois.*
+
+8.  Baixe o logo da FZB e o insira no arquivo, sendo centralizado e com 40% de seu tamanho original.
+
+9.  Que comando usamos para que o R entenda as colunas de um conjunto de dados como se fossem objetos? exemplifique num *chunck*.
+
+10. Crie dois gráficos de dispersão e os agrupe ussando a função ggarange().
+
+    1.  Variável explicativa Matéria Orgânica e a resposta a Densidade;
+
+    2.  Mesmo em 1, porém com a forma dos pontos baseada nos diferentes ambientes. Qual sua conclusão?
+
+11. Dados os dados abaixo:
+
+    ```{r eval = FALSE}
+    ambiente <- data.frame(list(
+         Locais = c(1:20),
+         OD = rnorm(20, 6, 0.5),
+         temp = rnorm(20, 23, 1),
+         pH = rnorm(20, 7, 0.2),
+         Cond = rnorm(20, 50, 30),
+         estagio = gl(4, 5, 
+            labels = c("Climax", "Inicial","Medio_tardio", "Medio_inicial")) 
+        ))
+
+        comunidade <- data.frame(list(Locais = c(1:20),
+          Sp1 = rpois(20, 2),
+          Sp2 = rpois(20, 5),
+          Sp3 = rpois(20, 10),
+          Sp4 = rpois(20, 13),
+          Sp5 = rpois(20, 13),
+          Sp6 = rpois(20, 1),
+          Sp7 = rpois(20, 0.5),
+          Sp8 = rpois(20, 4)))
+    ```
+
+    <br>
+
+    1.  Como podemos juntar dos dois conjuntos de dados e exeportá-los como arquivo *.csv* ?
+
+12. Usando o pacote **GGplot** crie um gráfico de erro, usando como dados, a abundância de espécies por estágio do exercício 11
+
+![logo FZB](/Users/marlonvasconcelos/DISCIPLINAS/Mestrado/Introdução_ao_R/fzb.png){width="40%"}
