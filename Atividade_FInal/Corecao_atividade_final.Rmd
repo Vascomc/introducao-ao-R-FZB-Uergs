@@ -1,0 +1,285 @@
+---
+title: "Atividade final da discilina de introdução ao R"
+author: "Márlon de Castro Vasconcelos"
+date: "`r format(Sys.time(),'%D, %B, %Y')`"
+output: 
+  html_document:
+    highlight: textmate
+    theme: flatly
+    number_sections: yes
+    toc: yes
+    toc_float:
+      collapse: yes
+      mooth_scroll: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.align = "center", 
+  collapse = TRUE
+)
+```
+
+# Carregue os pacotes, tidyverse, rstatix, kableExtra e ggpubr
+
+<br>
+
+Aqui é carregar todos os pacotes de uma única vez.
+
+<br>
+
+```{r}
+pacman::p_load(tidyverse, rstatix, ggpubr)
+```
+
+<br>
+
+# Crie um objeto e transforme as variáveis *character* em *factor*;
+
+<br>
+
+Primeiro temos que carregar os dados. Podemos fazer basicamente de duas formas.
+
+1.  A partir da internet;
+2.  Baixando e salvando num diretório de trabalho.
+
+<br>
+
+```{r}
+# da internet
+
+dados <- read.table("https://raw.githubusercontent.com/Vascomc/introducao-ao-R-FZB-Uergs/main/Atividade_FInal/dados.txt",h = T)
+# o argumento 'h = T' é para que os títulos das variáveis sejam lidos como tal.
+
+# de um diretótio
+
+# dados <- read.table("caminho_da_pasta", h = T)
+# dados <- read.table("dados.txt", 
+#                    sep = "", # para separadores do tipo tabulação
+#                    h = T)
+# como o arquivo está na mesma pasta do diretório, não precisa o caminho
+
+dados <- dados |> convert_as_factor(Ambiente) # aqui estou sobrescrevendo o conjunto de dados
+```
+
+<br>
+
+# Crie uma tabela de resumo estátistico para o número de indivíduos para cada ambiente;
+
+<br>
+
+```{r}
+resumo <- dados |> group_by(Ambiente) |> get_summary_stats(abundancia, type = "common")
+```
+
+<br>
+
+# Crie um boxplot para a riqueza e abundância.
+
+<br>
+
+```{r}
+fig.riqueza <- ggboxplot(dados, x = "Ambiente", 
+                         y = "riqueza", 
+                         ylab = "Riqueza de espécies observada",
+                         fill = "gray")
+fig.riqueza
+
+
+fig.abundancia <- ggboxplot(dados, x = "Ambiente", 
+                            y = "abundancia", 
+                            ylab = "N° de indivíduos observada")
+fig.abundancia
+
+```
+
+<br>
+
+# Aplique operadores lógicos para selecionar:
+
+<br>
+
+## 1. Somente dados para o ambiente de Mata;
+
+<br>
+
+Aqui basta usar a função \`filter\`.
+
+<br>
+
+```{r}
+dados.mata <- dados |> filter(Ambiente == "Mata")
+```
+
+<br>
+
+## 2. Para quando os valores de abundância forem maiores que 100.
+
+<br>
+
+Aqui farei de duas formas.
+
+```{r}
+dados.abund <- dados$abundancia[dados$abundancia > 100]
+
+attach(dados)
+abund <- abundancia[abundancia > 100]
+```
+
+<br>
+
+## Valores de densidade menores que o 1° quartil e maiores que o 3° quartil da riqueza.
+
+<br>
+
+Aqui primeiro temos que obter o resumo estatístico para a variável riqueza.
+
+<br>
+
+```{r}
+summary(riqueza)
+
+dados.dens <- Densidade[riqueza < 10.71 | riqueza > 11.65]
+```
+
+<br>
+
+# Passe o conjunto para formato *wide* tendo como base a variável ambiente e salve em um objeto, e mostre as 6 primeira linhas desse objeto como uma tabela.
+
+<br>
+
+Aqui utilizarei como fonte dos valores a riqueza.
+
+<br>
+
+```{r}
+dados.wide <- dados |>
+  pivot_wider(names_from = Ambiente, values_from = riqueza, values_fill = 0)
+head(dados.wide)
+```
+
+<br>
+
+# Crie uma matriz, contendo 15 linhas e 5 colunas. Preencha as colunas usando distribuição Normal para as 3 primeiras colunas e distribuição de Poison para as duas ultimas.
+
+<br>
+
+```{r}
+set.seed(123)
+matriz <- matrix(nrow = 15, ncol = 5, 
+                 c(
+                   rnorm(15, 5, 2),
+                   rnorm(15, 10, 3),
+                   rnorm(15, 7, 2),
+                   rpois(15, 4),
+                   rpois(15, 2)
+                 )
+               )
+matriz
+```
+
+<br>
+
+# Baixe o logo da FZB e o insira no arquivo, sendo centralizado e com 40% de seu tamanho original.
+
+<br>
+
+Basta copiar o caminho da figura.
+
+![](/Users/marlonvasconcelos/DISCIPLINAS/Mestrado/Introdução_ao_R/fzb.png)
+
+aqui é mais interessante configurar no `chunk` de configuração geral usando `fig.width = 40`.
+
+<br>
+
+# Que comando usamos para que o R entenda as colunas de um conjunto de dados como se fossem objetos? exemplifique num chunck.
+
+<br>
+
+```{r}
+attach(dados)
+```
+
+<br>
+
+# Crie dois gráficos de dispersão e os agrupe ussando a função ggarange().
+
+```{r}
+# Variável explicativa Matéria Orgânica e a resposta a Densidade;
+
+fig1 <- ggscatter(dados, x = "MO", y = "Densidade", 
+                  ylab = "Densidade de orgânismos",
+                  xlab = "Matéria Orgânica")
+
+
+# Mesmo em 1, porém com a forma dos pontos baseada nos diferentes ambientes. Qual sua conclusão?
+# 
+fig2 <- ggscatter(dados, x = "MO", y = "Densidade", 
+                  ylab = "", xlab = "Matéria Orgânica",
+                  color = "Ambiente", shape = "Ambiente")
+
+
+ggarrange(fig1, fig2, labels = c("A", "B"))
+# veja outros argumentos da função.
+```
+
+<br>
+
+# Dados os dados abaixo: Como podemos juntar dos dois conjuntos de dados e exeportá-los como arquivo .csv ?
+
+<br>
+
+```{r}
+ambiente <- data.frame(list(
+     Locais = c(1:20),
+     OD = rnorm(20, 6, 0.5),
+     temp = rnorm(20, 23, 1),
+     pH = rnorm(20, 7, 0.2),
+     Cond = rnorm(20, 50, 30),
+     estagio = gl(4, 5, 
+        labels = c("Climax", "Inicial","Medio_tardio", "Medio_inicial")) 
+    ))
+
+comunidade <- data.frame(list(Locais = c(1:20),
+      Sp1 = rpois(20, 2),
+      Sp2 = rpois(20, 5),
+      Sp3 = rpois(20, 10),
+      Sp4 = rpois(20, 13),
+      Sp5 = rpois(20, 13),
+      Sp6 = rpois(20, 1),
+      Sp7 = rpois(20, 0.5),
+      Sp8 = rpois(20, 4)))
+    
+dados.juntos <- left_join(ambiente,comunidade,by="Locais")
+write.csv(dados.juntos, "dados_juntos.csv")    
+    
+
+```
+
+<br>
+
+# Usando o pacote GGplot crie um gráfico de erro, usando como dados, a abundância de espécies por estágio do exercício 11.
+
+<br>
+
+```{r}
+# Primeiro temos que obter as abundâncias
+dados.juntos$abundancia <- rowSums(comunidade[,2:9])
+# Ao criarmos um objeto como acima, estamos inserindo no conjunto de dados uma coluna a mais com os valores de abundância.
+dados.juntos$abundancia 
+
+
+resumo <- dados.juntos |> group_by(estagio) |> 
+  get_summary_stats(abundancia, type = "mean_se")
+resumo
+
+j <- ggplot(resumo, aes(estagio, mean, ymin = mean - se, ymax = mean + se))
+# Gráfico base
+j + geom_pointrange() +
+ylab("Abundâncias médias observadas") +
+xlab("Estágios sucessionais") +
+scale_x_discrete(limits = c("Inicial", "Medio_inicial", "Medio_tardio","Climax")) +
+theme_bw()
+
+```
